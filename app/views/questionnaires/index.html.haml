@@ -1,0 +1,11 @@
+= render 'layouts/questionnaires/header'
+
+%div.container
+  %div.row
+  -@questionnaires.each.with_index do |questionnaire, index|
+    %div.panel.panel-success.tile.panelClose.panelRefresh
+      %div.panel-heading
+        %h4.panel-title
+          = questionnaire.title
+        = "Questions: " + questionnaire.questions.count.to_s
+        = link_to 'Destroy', questionnaire, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger pull-right"

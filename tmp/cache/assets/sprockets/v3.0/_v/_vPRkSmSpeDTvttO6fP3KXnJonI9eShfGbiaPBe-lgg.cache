@@ -1,0 +1,10 @@
+I"³(function() {
+  $(document).ready(function() {
+    return $('#game_form').submit(function(e) {
+      e.preventDefault();
+      return alert("hola");
+    });
+  });
+
+}).call(this);
+:ET

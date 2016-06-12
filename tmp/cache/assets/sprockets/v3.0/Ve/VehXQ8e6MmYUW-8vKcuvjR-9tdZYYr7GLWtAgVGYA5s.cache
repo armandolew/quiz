@@ -1,0 +1,27 @@
+I"(function() {
+  $(document).ready(function() {
+    return $('#game_form').submit(function(e) {
+      var answer, question, questionnaire;
+      e.preventDefault();
+      answer = $(this).find(".answer").val();
+      if (answer === "" || answer === NULL || answer.length < 1) {
+        return alert("EMPTY");
+      } else {
+        questionnaire = $(this).find("#questionnaire_id").val();
+        question = $(this).find("#question_id").val();
+        $.ajax('localhost:5000/games/get_answer', {
+          method: 'POST',
+          contentType: 'application/json',
+          processData: false,
+          data: JSON.stringify({
+            questionnaire_id: questionnaire,
+            question_id: question,
+            answer: answer
+          })
+        });
+      }
+    });
+  });
+
+}).call(this);
+:ET

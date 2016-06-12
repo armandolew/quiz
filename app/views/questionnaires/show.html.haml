@@ -1,0 +1,31 @@
+= render 'layouts/questionnaires/header'
+
+:css
+  .highlight{
+    color: #fff;
+    background-color: #66C796;
+    padding: 9px 14px;
+    box-sizing: border-sizing;
+  }
+  .question_header{
+    background-color: #fff;
+    padding: 9px 14px;
+    box-sizing: border-sizing;
+  }
+  .question_content{
+    border: 1px solid #e1e1e8;
+    margin: 0 0 14px 0;
+  }
+
+%div.container
+  %div.row
+    %div.questionnaire
+      %h2 
+        = @questionnaire.title
+      %div.questions
+        - @questionnaire.questions.each do |question|
+          %div.question_content
+            %div.question_header
+              = question.content
+            %div.highlight
+              = question.answer

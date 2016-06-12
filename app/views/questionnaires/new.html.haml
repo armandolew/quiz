@@ -1,0 +1,27 @@
+= render 'layouts/questionnaires/header'
+
+:css
+  .links{
+    margin: 14px 0;
+  }
+  .question{
+    margin: 14px 0;
+  }
+    
+
+%div.container
+  %div.row
+    %div.breadcrumb
+      Quiz
+    = form_for @questionnaire do |f|
+      .field
+        = f.label :title
+        = f.text_field :title, :class => 'form-control'
+      %h4 Questions
+      %div#questions.highlight
+        = f.fields_for :questions do |q|
+          = render 'question_fields', f: q
+      .links
+        = link_to_add_association f, :questions, :class => 'btn btn-primary' do
+          Add question!
+        %button{:type => :submit, class: 'btn btn-success pull-right'} Create Quiz!

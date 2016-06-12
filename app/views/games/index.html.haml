@@ -1,0 +1,13 @@
+%div.container
+  %div.row
+    %div.col-md-10.column
+      %div.panel.panel-primary
+        %div.panel-heading
+          %h3.panel-title
+            Pick a quiz
+        %div.panel-body
+          -if !@questionnaires.nil?
+            -@questionnaires.each do |q|
+              %div.quiz
+                =q.title
+                =link_to "Play!", game_new_path(:questionnaire_id => q.id), :class => "btn btn-success"

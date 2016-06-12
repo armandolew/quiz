@@ -1,0 +1,69 @@
+%div.container
+  %div.row
+    %div.col-md-10.column
+      %div.progress
+        %div.progress-bar.progress-bar-success{ role: "progressbar", :style => "width: #{((@question_number*100)/@question_count).to_s}%;", aria:{ valuenow: ((@question_number*100)/@question_count).to_s, valuemax: @question_count.to_s, valuemin: 0 } }
+          = ((@question_number*100)/@question_count).to_s
+            
+    %div.col-md-10.column
+      %div.panel.panel-primary
+        %div.panel-heading
+          %h3.panel-title
+            =@question.content
+        %div.panel-body
+          =form_tag({:controller => "games", :action => "show"}, :method => "get", :id => "game_form", :onsubmit => "return false;") do
+            %input.form-control.answer{:type => "text", :name => "answer"}
+            %input{:type => "hidden", :id => "questionnaire_id", :value => @questionnaire.id}
+            %input{:type => "hidden", :id => "question_id", :value => @question.id}
+            %div.panel-footer
+              %button.btn.btn-primary{:type => "submit"} Answer!
+              %div.next_question.pull-right
+                -if @question_number < @question_count
+                  =link_to "Next Question", game_playing_path(:questionnaire_id => @questionnaire.id, :question_id => (@question_number + 1) ), :class => "btn btn-success"
+                -else
+                  =link_to "Results", game_results_path, :class => "btn btn-primary"
+
+:javascript
+  $(document).ready(function() {
+    $('#game_form').submit(function(e) {
+      var $answer, $question, $questionnaire;
+      $answer = $(this).find('.answer').val();
+      if ($answer === '' || $answer.length < 1) {
+        $('#myModal').find('.modal-body p').html('Please provide an answer');
+        $('#myModal').modal();
+      } else {
+        $questionnaire = $(this).find('#questionnaire_id').val();
+        $question = $(this).find('#question_id').val();
+        $.ajax({
+          url: 'http://localhost:5000/games/get_answer',
+          type: 'post',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            questionnaire_id: $questionnaire,
+            question_id: $question,
+            answer: $answer
+          }),
+          beforeSend: function() {
+            return console.log($(this));
+          },
+          success: function(data) {
+            var $message;
+            console.log(data.response);
+            if (data.response === false) {
+              $message = 'Ups, bad choice. You can do better!';
+            } else {
+              $message = 'Correct! Keep it up!';
+            }
+            $('#myModal').find('.modal-body p').html($message);
+            $('#myModal').modal();
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(errorThrown);
+          }
+        });
+        $('.next_question').show();
+      }
+      return false;
+    });
+  });

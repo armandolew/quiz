@@ -1,0 +1,31 @@
+I"O(function() {
+  $(document).ready(function() {
+    return $('#game_form').submit(function(e) {
+      var answer, question, questionnaire;
+      e.preventDefault();
+      answer = $(this).find(".answer").val();
+      if (answer === "" || answer.length < 1) {
+        return alert("EMPTY");
+      } else {
+        questionnaire = $(this).find("#questionnaire_id").val();
+        question = $(this).find("#question_id").val();
+        alert(answer);
+        $.ajax({
+          type: 'POST',
+          url: 'localhost:5000/games/get_answer',
+          data: JSON.stringify({
+            questionnaire_id: questionnaire,
+            question_id: question,
+            answer: answer
+          }),
+          dataType: 'json',
+          success: function(result) {
+            alert(result);
+          }
+        });
+      }
+    });
+  });
+
+}).call(this);
+:ET

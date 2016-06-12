@@ -1,0 +1,14 @@
+I"A(function() {
+  $(document).ready(function() {
+    return $('#game_form').submit(function(e) {
+      var answer;
+      e.preventDefault();
+      answer = $(this).find(".answer").val();
+      if (answer === "" || answer === NULL || answer.length < 1) {
+        return alert("EMPTY");
+      }
+    });
+  });
+
+}).call(this);
+:ET

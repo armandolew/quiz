@@ -1,0 +1,24 @@
+I"ß(function() {
+  $(document).ready(function() {
+    return $('#game_form').submit(function(e) {
+      var answer, question, questionnaire;
+      e.preventDefault();
+      answer = $(this).find(".answer").val();
+      if (answer === "" || answer === NULL || answer.length < 1) {
+        return alert("EMPTY");
+      } else {
+        questionnaire = $(this).find("#questionnaire_id").val();
+        question = $(this).find("#question_id").val();
+        return $.post('localhost:5000/games/get_answer', {
+          questionnaire_id: questionnaire,
+          question_id: question,
+          answer: answer
+        }, function(status) {
+          alert('Data' + data + 'Status' + status);
+        });
+      }
+    });
+  });
+
+}).call(this);
+:ET

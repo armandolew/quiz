@@ -1,0 +1,14 @@
+%div.container
+  %div.row
+    %div.col-md-10.column
+      %div.panel.panel-primary
+        %div.panel-heading
+          %h3.panel-title
+            Let's play!
+        %div.panel-body
+          =form_tag "/games", :method => :post do
+            %label Type your username:
+            %input.form-control{:name => "username"}
+            %input{:type => "hidden", :name => "questionnaire_id", :value => @id}
+            %br
+            %button.btn.btn-primary.pull-right{:type => "submit"} Game on!

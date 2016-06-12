@@ -1,0 +1,50 @@
+I">(function() {
+  $(document).ready(function() {
+    $('#game_form').submit(function(e) {
+      var $answer, $question, $questionnaire;
+      $answer = void 0;
+      $question = void 0;
+      $questionnaire = void 0;
+      $answer = $(this).find('.answer').val();
+      if ($answer === '' || $answer.length < 1) {
+        $('#myModal').find('.modal-body p').html('Please provide an answer');
+        $('#myModal').modal();
+      } else {
+        $questionnaire = $(this).find('#questionnaire_id').val();
+        $question = $(this).find('#question_id').val();
+        $.ajax({
+          url: 'http://localhost:5000/games/get_answer',
+          type: 'post',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            questionnaire_id: $questionnaire,
+            question_id: $question,
+            answer: $answer
+          }),
+          beforeSend: function() {
+            return console.log($(this));
+          },
+          success: function(data) {
+            var $message;
+            $message = void 0;
+            console.log(data.response);
+            if (data.response === false) {
+              $message = 'Ups, bad choice. You can do better!';
+            } else {
+              $message = 'Correct! Keep it up!';
+            }
+            $('#myModal').find('.modal-body p').html($message);
+            $('#myModal').modal();
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(errorThrown);
+          }
+        });
+      }
+      return false;
+    });
+  });
+
+}).call(this);
+:ET
