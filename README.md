@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Database runs on Postgresql
+ruby v = 2.3.0
+rails v = 5.0.0.rc1
 
-Things you may want to cover:
+In order to run the application:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  - Create a db called "quiz"
+  - Add a userwith all privileges
+  - Modify database.yml accordingly
+  - run "foreman start" on terminal
+  
+Regards
